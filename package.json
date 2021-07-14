@@ -1,0 +1,50 @@
+{
+  "name": "auxita-code-challenge",
+  "version": "1.0.0",
+  "description": "Code challenge",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --open --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitros/auxita-code-challenge.git"
+  },
+  "author": "Diego Valdez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/digitros/auxita-code-challenge/issues"
+  },
+  "homepage": "https://github.com/digitros/auxita-code-challenge#readme",
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.1.8",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
