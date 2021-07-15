@@ -14,6 +14,7 @@ const Pressure = () => {
   const [dataInput, setDataInput] = useState('');
   const [dataObject, setDataObject] = useState([] as IDataObject[]);
   const [error, setError] = useState({});
+  const [lastReading, setLastReading] = useState({} as IDataObject);
   const demoString = `
 [
   {"eGFR": 65, "atDate": "2018/10/31"},
@@ -41,10 +42,8 @@ const Pressure = () => {
   };
 
   const calculateHealth = (data: IDataObject[]) => {
-    const lastReading = data
-      .sort((a, b) => a.atDate.localeCompare(b.atDate))
-      .pop();
-    console.log(lastReading, data);
+    const last = data.sort((a, b) => a.atDate.localeCompare(b.atDate)).pop();
+    last && setLastReading(last);
   };
 
   useEffect(() => {
@@ -57,7 +56,12 @@ const Pressure = () => {
 
   return (
     <main>
-      <Box size={BoxSizes.medium}>Result</Box>
+      <Box size={BoxSizes.medium}>
+        <div className="results">
+          <span>Last Reading: {lastReading.eGFR}</span>
+          <span>Last Date: {lastReading.atDate}</span>
+        </div>
+      </Box>
       <Box size={BoxSizes.medium}>
         <div className="calculator">
           <span>Please paste your data in following format: </span>
