@@ -1,5 +1,5 @@
 export default {
   HOME: '/',
-  PRESURE: '/presure',
+  PRESSURE: '/pressure',
   KIDNEY: '/kidney',
 };

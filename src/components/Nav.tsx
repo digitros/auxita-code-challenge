@@ -20,10 +20,10 @@ const Nav = () => {
             <span>Home</span>
           </Link>
         </li>
-        <li className={pathname === ROUTES.PRESURE ? 'active' : ''}>
-          <Link to={ROUTES.PRESURE}>
+        <li className={pathname === ROUTES.PRESSURE ? 'active' : ''}>
+          <Link to={ROUTES.PRESSURE}>
             <Favorite className="nav-icon" />
-            <span>Presure</span>
+            <span>Pressure</span>
           </Link>
         </li>
         <li className={pathname === ROUTES.KIDNEY ? 'active' : ''}>
