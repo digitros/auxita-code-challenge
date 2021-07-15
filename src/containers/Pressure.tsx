@@ -1,7 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Box from '../components/Box';
+
+import { BoxSizes } from '../interfaces/Props';
+
+import '../styles/Pressure.styl';
+
+interface IDataObject {
+  eGFR: number;
+  atDate: string;
+}
 
 const Pressure = () => {
-  return <div>Hola Pressure</div>;
+  const [dataInput, setDataInput] = useState('');
+  const [dataObject, setDataObject] = useState([] as IDataObject[]);
+  const [error, setError] = useState({});
+  const demoString = `
+[
+  {"eGFR": 65, "atDate": "2018/10/31"},
+  {"eGFR": 70, "atDate": "2018/10/20"},
+  {"eGFR": 70, "atDate": "2017/10/20"}
+]
+    `;
+
+  const parseStringToJSON = async (stringToParse: string) => {
+    try {
+      await setDataObject(JSON.parse(stringToParse));
+    } catch (error) {
+      if (error && typeof error === 'object') {
+        setError(error);
+      }
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDataInput(e.target.value);
+  };
+
+  const handleClick = () => {
+    parseStringToJSON(dataInput);
+  };
+
+  const calculateHealth = (data: IDataObject[]) => {
+    const lastReading = data
+      .sort((a, b) => a.atDate.localeCompare(b.atDate))
+      .pop();
+    console.log(lastReading, data);
+  };
+
+  useEffect(() => {
+    calculateHealth(dataObject);
+  }, [dataObject]);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
+
+  return (
+    <main>
+      <Box size={BoxSizes.medium}>Result</Box>
+      <Box size={BoxSizes.medium}>
+        <div className="calculator">
+          <span>Please paste your data in following format: </span>
+          <pre className="calculator-code">{demoString}</pre>
+          <textarea className="calculator-input" onChange={handleChange} />
+          <button className="calculator-button" onClick={handleClick}>
+            Send
+          </button>
+        </div>
+      </Box>
+    </main>
+  );
 };
 
 export default Pressure;
