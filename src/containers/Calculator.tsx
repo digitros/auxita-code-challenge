@@ -32,6 +32,10 @@ interface ICalculatorProps {
   type: string;
 }
 
+interface IError {
+  message: string;
+}
+
 const isPressure = (param: IDataObject): param is IPressureDataObject => {
   return (param as IPressureDataObject).DiaBP !== undefined;
 };
@@ -39,7 +43,7 @@ const isPressure = (param: IDataObject): param is IPressureDataObject => {
 const Calculator = ({ type }: ICalculatorProps) => {
   const [dataInput, setDataInput] = useState('');
   const [dataObject, setDataObject] = useState<IDataObject[]>([]);
-  const [error, setError] = useState({});
+  const [error, setError] = useState<IError>({});
   const [lastReading, setLastReading] = useState<IDataObject>();
   const [classification, setClassification] = useState('');
   const [drops, setDrops] = useState<IDrops[]>([]);
@@ -146,11 +150,12 @@ const Calculator = ({ type }: ICalculatorProps) => {
   }, [dataObject]);
 
   useEffect(() => {
-    console.log(error);
+    error.message && setTimeout(() => setError({} as IError), 5000);
   }, [error]);
 
   return (
     <main className="tools">
+      {error.message && <div className="error">{error.message}</div>}
       <Box size={BoxSizes.large}>
         <div className="tools-title">
           <h2>{type}</h2>
