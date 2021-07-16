@@ -42,7 +42,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
   const [error, setError] = useState({});
   const [lastReading, setLastReading] = useState<IDataObject>();
   const [classification, setClassification] = useState('');
-  const [drops, setDrops] = useState<IDrops>({} as IDrops);
+  const [drops, setDrops] = useState<IDrops[]>([]);
 
   const parseStringToJSON = (stringToParse: string) => {
     try {
@@ -100,9 +100,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
     };
 
     const calculateDrops = (data: IKidneyDataObject[]) => {
-      // const dropPercentage;
       const orderedData = data.sort((a, b) => a.atDate.localeCompare(b.atDate));
-      // console.log(orderedData, 'ordered');
       const dropReadings = orderedData
         .map((item, index, arr) => {
           if (index !== arr.length - 1) {
@@ -115,22 +113,25 @@ const Calculator = ({ type }: ICalculatorProps) => {
           }
         })
         .filter((item) => item);
-
-      console.log(dropReadings);
+      setDrops(dropReadings as IDrops[]);
     };
 
     const isFormatCorrect = (dataFormat: IDataObject[]) => {
-      if (type === CALCTYPES.PRESSURE) {
-        return !dataFormat.some((item) => !isPressure(item));
+      try {
+        if (type === CALCTYPES.PRESSURE) {
+          return !dataFormat.some((item) => !isPressure(item));
+        }
+        return !dataFormat.some((item) => isPressure(item));
+      } catch (error) {
+        setError({ message: 'Incorrect Format' });
       }
-      return !dataFormat.some((item) => isPressure(item));
     };
 
     if (isFormatCorrect(data)) {
       const last = data.sort((a, b) => a.atDate.localeCompare(b.atDate))[
         data.length - 1
       ];
-      calculateDrops(data as IKidneyDataObject[]);
+      type === CALCTYPES.KIDNEY && calculateDrops(data as IKidneyDataObject[]);
       last && setLastReading(last);
       last && calculateDisease(last);
     } else {
@@ -160,20 +161,58 @@ const Calculator = ({ type }: ICalculatorProps) => {
           <div className="results">
             {lastReading ? (
               <>
-                <span>
-                  Last Reading:{' '}
-                  {type === CALCTYPES.PRESSURE &&
-                    isPressure(lastReading) &&
-                    `SysBP: ${lastReading.SysBP} DisBP: ${lastReading.DiaBP}`}
-                  {type === CALCTYPES.KIDNEY &&
-                    !isPressure(lastReading) &&
-                    `eGFR: ${lastReading.eGFR}`}
+                <div className="results-topic">
+                  <h2>Last Reading:</h2>
+                  {type === CALCTYPES.PRESSURE && isPressure(lastReading) && (
+                    <span>
+                      SysBP: <strong>{lastReading.SysBP}</strong> DisBP:{' '}
+                      <strong>{lastReading.DiaBP}</strong>
+                    </span>
+                  )}
+                  {type === CALCTYPES.KIDNEY && !isPressure(lastReading) && (
+                    <span className="results-topic-important">
+                      eGFR: <strong>{lastReading.eGFR}</strong>
+                    </span>
+                  )}
+                </div>
+                <span className="results-topic">
+                  Last Date: <strong>{lastReading.atDate}</strong>
                 </span>
-                <span>Last Date: {lastReading.atDate}</span>
-                <span>Classification: {classification}</span>
+                <span className="results-topic">
+                  Classification: <strong>{classification}</strong>
+                </span>
               </>
             ) : (
-              <span>Here you will see your health calculation.</span>
+              <span className="results-topic">
+                Here you will see your health calculation.
+              </span>
+            )}
+            {drops.length > 0 && (
+              <div className="drops-container">
+                <h2>Important Drops</h2>
+                {drops.map((drop, index) => {
+                  return (
+                    <div className="drops-section" key={`drop${index}`}>
+                      <span>Drop Percentage: {drop.drop}%</span>
+                      {drop.readings.map((read, readIndex) => {
+                        return (
+                          <div
+                            key={`dropStat${readIndex}`}
+                            className="drops-section-item"
+                          >
+                            <span>
+                              eGFR: <strong>{read.eGFR}</strong>
+                            </span>
+                            <span>
+                              Date: <strong>{read.atDate}</strong>
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </div>
         </Box>
