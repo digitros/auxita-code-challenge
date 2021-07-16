@@ -1,3 +1,4 @@
+import { ContactSupportOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import Box from '../components/Box';
 
@@ -20,6 +21,11 @@ interface IKidneyDataObject {
   atDate: string;
 }
 
+interface IDrops {
+  drop: number;
+  readings: IKidneyDataObject[];
+}
+
 type IDataObject = IPressureDataObject | IKidneyDataObject;
 
 interface ICalculatorProps {
@@ -36,14 +42,13 @@ const Calculator = ({ type }: ICalculatorProps) => {
   const [error, setError] = useState({});
   const [lastReading, setLastReading] = useState<IDataObject>();
   const [classification, setClassification] = useState('');
+  const [drops, setDrops] = useState<IDrops>({} as IDrops);
 
-  const parseStringToJSON = async (stringToParse: string) => {
+  const parseStringToJSON = (stringToParse: string) => {
     try {
-      await setDataObject(JSON.parse(stringToParse));
+      setDataObject(JSON.parse(stringToParse));
     } catch (error) {
-      if (error && typeof error === 'object') {
-        setError(error);
-      }
+      setError({ message: 'Incorrect Format' });
     }
   };
 
@@ -56,7 +61,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
   };
 
   const calculateHealth = (data: IDataObject[]) => {
-    const calculateHypertension = (reading: IDataObject) => {
+    const calculateDisease = (reading: IDataObject) => {
       if (type === CALCTYPES.PRESSURE && isPressure(reading)) {
         if (reading.SysBP >= 180 && reading.DiaBP >= 120) {
           setClassification('Stage 3');
@@ -94,17 +99,40 @@ const Calculator = ({ type }: ICalculatorProps) => {
       }
     };
 
-    const isFormatCorrect = (data: IDataObject[]) => {
+    const calculateDrops = (data: IKidneyDataObject[]) => {
+      // const dropPercentage;
+      const orderedData = data.sort((a, b) => a.atDate.localeCompare(b.atDate));
+      // console.log(orderedData, 'ordered');
+      const dropReadings = orderedData
+        .map((item, index, arr) => {
+          if (index !== arr.length - 1) {
+            const dropPercentage = Math.floor(
+              Math.abs(100 - (arr[index + 1].eGFR * 100) / item.eGFR)
+            );
+            if (dropPercentage >= 20) {
+              return { drop: dropPercentage, readings: [item, arr[index + 1]] };
+            }
+          }
+        })
+        .filter((item) => item);
+
+      console.log(dropReadings);
+    };
+
+    const isFormatCorrect = (dataFormat: IDataObject[]) => {
       if (type === CALCTYPES.PRESSURE) {
-        return !data.some((item) => !isPressure(item));
+        return !dataFormat.some((item) => !isPressure(item));
       }
-      return !data.some((item) => isPressure(item));
+      return !dataFormat.some((item) => isPressure(item));
     };
 
     if (isFormatCorrect(data)) {
-      const last = data.sort((a, b) => a.atDate.localeCompare(b.atDate)).pop();
+      const last = data.sort((a, b) => a.atDate.localeCompare(b.atDate))[
+        data.length - 1
+      ];
+      calculateDrops(data as IKidneyDataObject[]);
       last && setLastReading(last);
-      last && calculateHypertension(last);
+      last && calculateDisease(last);
     } else {
       setError({ message: 'Incorrect Format' });
     }

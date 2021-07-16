@@ -13,7 +13,7 @@ export const demoPressureString = `
 
 export const demoKidneyString = `
   [
-    {"eGFR": 65, "atDate": "2018/10/31"},
+    {"eGFR": 30, "atDate": "2018/10/31"},
     {"eGFR": 70, "atDate": "2018/10/20"},
     {"eGFR": 62, "atDate": "2017/10/20"}
   ]
