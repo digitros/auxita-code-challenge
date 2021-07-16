@@ -43,7 +43,7 @@ const isPressure = (param: IDataObject): param is IPressureDataObject => {
 const Calculator = ({ type }: ICalculatorProps) => {
   const [dataInput, setDataInput] = useState('');
   const [dataObject, setDataObject] = useState<IDataObject[]>([]);
-  const [error, setError] = useState<IError>({});
+  const [error, setError] = useState<IError>({} as IError);
   const [lastReading, setLastReading] = useState<IDataObject>();
   const [classification, setClassification] = useState('');
   const [drops, setDrops] = useState<IDrops[]>([]);
