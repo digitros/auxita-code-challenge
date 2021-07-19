@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../styles/Header.styl';
+import LanguageButton from './LanguageButton';
 
 const Header = () => {
   return (
@@ -8,6 +9,7 @@ const Header = () => {
       <span className="header-title">
         health<strong>Calculator</strong>
       </span>
+      <LanguageButton />
     </header>
   );
 };

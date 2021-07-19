@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve --open --mode development"
+    "start": "webpack serve --open --mode development",
+    "extract": "i18next --config i18next-parser.config.js"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,14 @@
     "css-loader": "^6.0.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.2",
+    "i18next": "^20.3.3",
+    "i18next-browser-languagedetector": "^6.1.2",
+    "i18next-parser": "^4.2.0",
+    "i18next-xhr-backend": "^3.2.2",
     "mini-css-extract-plugin": "^2.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-i18next": "^11.11.3",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
     "style-loader": "^3.1.0",
