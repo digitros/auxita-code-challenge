@@ -1,14 +1,22 @@
-import { ContactSupportOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
+
+/* Components */
 import Box from '../components/Box';
 
+/* Constants */
 import CALCTYPES, {
   demoKidneyString,
   demoPressureString,
 } from '../constants/CalculatorType';
+
+/* Styles */
+import '../styles/Calculator.styl';
+
+/* Interfaces */
 import { BoxSizes } from '../interfaces/Props';
 
-import '../styles/Calculator.styl';
+/* i18n */
+import { useTranslation } from 'react-i18next';
 
 interface IPressureDataObject {
   SysBP: number;
@@ -41,6 +49,7 @@ const isPressure = (param: IDataObject): param is IPressureDataObject => {
 };
 
 const Calculator = ({ type }: ICalculatorProps) => {
+  const { i18n, t } = useTranslation(['Calculator']);
   const [dataInput, setDataInput] = useState('');
   const [dataObject, setDataObject] = useState<IDataObject[]>([]);
   const [error, setError] = useState<IError>({} as IError);
@@ -52,7 +61,9 @@ const Calculator = ({ type }: ICalculatorProps) => {
     try {
       setDataObject(JSON.parse(stringToParse));
     } catch (error) {
-      setError({ message: 'Incorrect Format' });
+      setError({
+        message: t('Calculator:IncorrectFormat', 'Incorrect Format'),
+      });
     }
   };
 
@@ -68,37 +79,39 @@ const Calculator = ({ type }: ICalculatorProps) => {
     const calculateDisease = (reading: IDataObject) => {
       if (type === CALCTYPES.PRESSURE && isPressure(reading)) {
         if (reading.SysBP >= 180 && reading.DiaBP >= 120) {
-          setClassification('Stage 3');
+          setClassification(t('Calculator:Stage3', 'Stage 3'));
         } else if (
           reading.SysBP >= 160 &&
           reading.SysBP < 180 &&
           reading.DiaBP >= 100 &&
           reading.DiaBP < 110
         ) {
-          setClassification('Stage 2');
+          setClassification(t('Calculator:Stage2', 'Stage 2'));
         } else if (
           reading.SysBP >= 140 &&
           reading.SysBP < 160 &&
           reading.DiaBP >= 90 &&
           reading.DiaBP < 100
         ) {
-          setClassification('Stage 1');
+          setClassification(t('Calculator:Stage1', 'Stage 1'));
         } else {
-          setClassification('No Hypertension');
+          setClassification(t('Calculator:NoStage', 'No Hypertension'));
         }
       } else if (type === CALCTYPES.KIDNEY && !isPressure(reading)) {
         if (reading.eGFR >= 90) {
-          setClassification('Normal');
+          setClassification(t('Calculator:Normal', 'Normal'));
         } else if (reading.eGFR >= 60 && reading.eGFR <= 89) {
-          setClassification('Mildy Decreased');
+          setClassification(t('Calculator:MildyDecreased', 'Mildy Decreased'));
         } else if (reading.eGFR >= 45 && reading.eGFR <= 59) {
-          setClassification('Mild to Moderate');
+          setClassification(t('Calculator:MildModerate', 'Mild to Moderate'));
         } else if (reading.eGFR >= 30 && reading.eGFR <= 44) {
-          setClassification('Moderate to Severe');
+          setClassification(t('Calculator:ModSevere', 'Moderate to Severe'));
         } else if (reading.eGFR >= 15 && reading.eGFR <= 29) {
-          setClassification('Deverely Decreased');
+          setClassification(
+            t('Calculator:SeveDecreased', 'Severely Decreased')
+          );
         } else {
-          setClassification('Kidney Failure');
+          setClassification(t('Calculator:Failure', 'Kidney Failure'));
         }
       }
     };
@@ -127,7 +140,9 @@ const Calculator = ({ type }: ICalculatorProps) => {
         }
         return !dataFormat.some((item) => isPressure(item));
       } catch (error) {
-        setError({ message: 'Incorrect Format' });
+        setError({
+          message: t('Calculator:IncorrectFormat', 'Incorrect Format'),
+        });
       }
     };
 
@@ -139,8 +154,24 @@ const Calculator = ({ type }: ICalculatorProps) => {
       last && setLastReading(last);
       last && calculateDisease(last);
     } else {
-      setError({ message: 'Incorrect Format' });
+      setError({
+        message: t('Calculator:IncorrectFormat', 'Incorrect Format'),
+      });
     }
+  };
+
+  const translateTitle = () => {
+    console.log(type);
+    if (i18n.language === 'En') {
+      if (type === CALCTYPES.KIDNEY) {
+        return t('Nav:Kidney', type);
+      }
+      return t('Nav:Pressure', 'Blood Pressure');
+    }
+    if (type === CALCTYPES.KIDNEY) {
+      return t('Nav:Kidney', type);
+    }
+    return t('Nav:Pressure', 'Blood Pressure');
   };
 
   useEffect(() => {
@@ -158,7 +189,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
       {error.message && <div className="error">{error.message}</div>}
       <Box size={BoxSizes.large}>
         <div className="tools-title">
-          <h2>{type}</h2>
+          <h2>{t(`Nav:${type.split(' ')[0]}`, type)}</h2>
         </div>
       </Box>
       <section className="tools-main">
@@ -167,7 +198,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
             {lastReading ? (
               <>
                 <div className="results-topic">
-                  <h2>Last Reading:</h2>
+                  <h2>{t('Calculator:LastReading', 'Last Reading')}:</h2>
                   {type === CALCTYPES.PRESSURE && isPressure(lastReading) && (
                     <span>
                       SysBP: <strong>{lastReading.SysBP}</strong> DisBP:{' '}
@@ -181,24 +212,32 @@ const Calculator = ({ type }: ICalculatorProps) => {
                   )}
                 </div>
                 <span className="results-topic">
-                  Last Date: <strong>{lastReading.atDate}</strong>
+                  {t('Calculator:LastDate', 'Last Date')}:{' '}
+                  <strong>{lastReading.atDate}</strong>
                 </span>
                 <span className="results-topic">
-                  Classification: <strong>{classification}</strong>
+                  {t('Calculator:Class', 'Classification')}:{' '}
+                  <strong>{classification}</strong>
                 </span>
               </>
             ) : (
               <span className="results-topic">
-                Here you will see your health calculation.
+                {t(
+                  'Calculator:BeforeCalc',
+                  'Here you will see your health calculation.'
+                )}
               </span>
             )}
             {drops.length > 0 && (
               <div className="drops-container">
-                <h2>Important Drops</h2>
+                <h2>{t('Calculator:ImportantDrops', 'Important Drops')}</h2>
                 {drops.map((drop, index) => {
                   return (
                     <div className="drops-section" key={`drop${index}`}>
-                      <span>Drop Percentage: {drop.drop}%</span>
+                      <span>
+                        {t('Calculator:DropPercentage', 'Drop Percentage')}:{' '}
+                        {drop.drop}%
+                      </span>
                       {drop.readings.map((read, readIndex) => {
                         return (
                           <div
@@ -209,7 +248,8 @@ const Calculator = ({ type }: ICalculatorProps) => {
                               eGFR: <strong>{read.eGFR}</strong>
                             </span>
                             <span>
-                              Date: <strong>{read.atDate}</strong>
+                              {t('Calculator:Date', 'Date')}:{' '}
+                              <strong>{read.atDate}</strong>
                             </span>
                           </div>
                         );
@@ -223,7 +263,13 @@ const Calculator = ({ type }: ICalculatorProps) => {
         </Box>
         <Box size={BoxSizes.medium}>
           <div className="calculator">
-            <span>Please write/paste your data in following format: </span>
+            <span>
+              {t(
+                'Calculator:Input',
+                'Please write/paste your data in following format'
+              )}
+              :{' '}
+            </span>
             <pre className="calculator-code">
               {type === CALCTYPES.PRESSURE
                 ? demoPressureString
@@ -231,7 +277,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
             </pre>
             <textarea className="calculator-input" onChange={handleChange} />
             <button className="calculator-button" onClick={handleClick}>
-              Send
+              {t('Calculator:Send', 'Send')}
             </button>
           </div>
         </Box>

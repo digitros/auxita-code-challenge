@@ -1,0 +1,6 @@
+{
+  "first": "Aquí puede calcular cierta información sobre su estado de salud utilizando los datos de presión arterial y la TFGe para estimar si tiene alguna enfermedad",
+  "second": "No dude en seleccionar cualquiera de las opciones en el panel de navegación para comenzar a calcular su estado de salud en cualquier momento.",
+  "third": "Esta plataforma se desarrolla utilizando React.Js y otras herramientas.",
+  "title": "Bienvenido a healthCalculator"
+}

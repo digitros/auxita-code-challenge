@@ -1,0 +1,6 @@
+{
+  "first": "Here you can calculate some information regarding your health state using Blood Pressure data and eGFR to estimate if you have any disease.",
+  "second": "Please feel free to select any of the options in the navigation panel to start calculating your health state at any moment.",
+  "third": "This platform is developed using React.Js and other tools.",
+  "title": "Welcome to healthCalculator"
+}

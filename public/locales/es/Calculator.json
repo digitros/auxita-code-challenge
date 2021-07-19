@@ -1,0 +1,22 @@
+{
+  "BeforeCalc": "Aquí verá el cálculo de su salud.",
+  "Class": "Clasificación",
+  "Date": "Fecha",
+  "SeveDecreased": "Gravemente disminuido",
+  "DropPercentage": "Porcentaje de caida",
+  "Failure": "Falla del riñón",
+  "ImportantDrops": "Caidas importantes",
+  "IncorrectFormat": "Formato incorrecto",
+  "Input": "Por favor escribe/pega tus datos en el siguiente formato",
+  "LastDate": "Última fecha",
+  "LastReading": "Última lectura",
+  "MildModerate": "Leve a Moderado",
+  "MildyDecreased": "Disminución Leve",
+  "ModSevere": "Moderado a Severo",
+  "Normal": "Normal",
+  "NoStage": "Sin Hipertensión",
+  "Send": "Enviar",
+  "Stage1": "Etapa 1",
+  "Stage2": "Etapa 2",
+  "Stage3": "Etapa 3"
+}

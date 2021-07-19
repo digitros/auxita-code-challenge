@@ -1,0 +1,22 @@
+{
+  "BeforeCalc": "Here you will see your health calculation.",
+  "Class": "Classification",
+  "Date": "Date",
+  "SeveDecreased": "Severely Decreased",
+  "DropPercentage": "Drop Percentage",
+  "Failure": "Kidney Failure",
+  "ImportantDrops": "Important Drops",
+  "IncorrectFormat": "Incorrect Format",
+  "Input": "Please write/paste your data in following format",
+  "LastDate": "Last Date",
+  "LastReading": "Last Reading",
+  "MildModerate": "Mild to Moderate",
+  "MildyDecreased": "Mildy Decreased",
+  "ModSevere": "Moderate to Severe",
+  "Normal": "Normal",
+  "NoStage": "No Hypertension",
+  "Send": "Send",
+  "Stage1": "Stage 1",
+  "Stage2": "Stage 2",
+  "Stage3": "Stage 3"
+}
