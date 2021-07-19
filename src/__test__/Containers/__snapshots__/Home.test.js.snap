@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> Home snapshot 1`] = `
+<main>
+  <section
+    className="box box-medium"
+  >
+    <div
+      className="home"
+    >
+      <h1>
+        Home:title
+      </h1>
+      <p>
+        Home:first
+      </p>
+      <p>
+        Home:second
+      </p>
+      Home:third
+      <p />
+    </div>
+  </section>
+</main>
+`;

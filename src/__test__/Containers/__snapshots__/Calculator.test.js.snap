@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Calculator /> Calculator snapshot 1`] = `
+<main
+  className="tools"
+>
+  <section
+    className="box box-large"
+  >
+    <div
+      className="tools-title"
+    >
+      <h2>
+        Nav:Kidney
+      </h2>
+    </div>
+  </section>
+  <section
+    className="tools-main"
+  >
+    <section
+      className="box box-medium"
+    >
+      <div
+        className="results"
+      >
+        <span
+          className="results-topic"
+        >
+          Calculator:BeforeCalc
+        </span>
+      </div>
+    </section>
+    <section
+      className="box box-medium"
+    >
+      <div
+        className="calculator"
+      >
+        <span>
+          Calculator:Input
+          :
+           
+        </span>
+        <pre
+          className="calculator-code"
+        >
+          
+  [
+    {"eGFR": 30, "atDate": "2018/10/31"},
+    {"eGFR": 70, "atDate": "2018/10/20"},
+    {"eGFR": 62, "atDate": "2017/10/20"}
+  ]
+    
+        </pre>
+        <textarea
+          className="calculator-input"
+          onChange={[Function]}
+        />
+        <button
+          className="calculator-button"
+          onClick={[Function]}
+        >
+          Calculator:Send
+        </button>
+      </div>
+    </section>
+  </section>
+</main>
+`;
+
+exports[`<Calculator /> snapshot Calculator component render 1`] = `
+<main
+  className="tools"
+>
+  <section
+    className="box box-large"
+  >
+    <div
+      className="tools-title"
+    >
+      <h2>
+        Nav:Kidney
+      </h2>
+    </div>
+  </section>
+  <section
+    className="tools-main"
+  >
+    <section
+      className="box box-medium"
+    >
+      <div
+        className="results"
+      >
+        <span
+          className="results-topic"
+        >
+          Calculator:BeforeCalc
+        </span>
+      </div>
+    </section>
+    <section
+      className="box box-medium"
+    >
+      <div
+        className="calculator"
+      >
+        <span>
+          Calculator:Input
+          :
+           
+        </span>
+        <pre
+          className="calculator-code"
+        >
+          
+  [
+    {"eGFR": 30, "atDate": "2018/10/31"},
+    {"eGFR": 70, "atDate": "2018/10/20"},
+    {"eGFR": 62, "atDate": "2017/10/20"}
+  ]
+    
+        </pre>
+        <textarea
+          className="calculator-input"
+          onChange={[Function]}
+        />
+        <button
+          className="calculator-button"
+          onClick={[Function]}
+        >
+          Calculator:Send
+        </button>
+      </div>
+    </section>
+  </section>
+</main>
+`;
