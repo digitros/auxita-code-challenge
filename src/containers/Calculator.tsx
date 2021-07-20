@@ -160,24 +160,18 @@ const Calculator = ({ type }: ICalculatorProps) => {
     }
   };
 
-  const translateTitle = () => {
-    console.log(type);
-    if (i18n.language === 'En') {
-      if (type === CALCTYPES.KIDNEY) {
-        return t('Nav:Kidney', type);
-      }
-      return t('Nav:Pressure', 'Blood Pressure');
-    }
-    if (type === CALCTYPES.KIDNEY) {
-      return t('Nav:Kidney', type);
-    }
-    return t('Nav:Pressure', 'Blood Pressure');
-  };
-
   useEffect(() => {
-    dataObject && type === CALCTYPES.PRESSURE
-      ? calculateHealth(dataObject as IPressureDataObject[])
-      : calculateHealth(dataObject as IKidneyDataObject[]);
+    const re = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
+    if (!dataObject.every((item) => (item.atDate.match(re) ? true : false))) {
+      console.log('hola');
+      setError({
+        message: t('Calculator:IncorrectFormat', 'Incorrect Format'),
+      });
+    } else {
+      dataObject && type === CALCTYPES.PRESSURE
+        ? calculateHealth(dataObject as IPressureDataObject[])
+        : calculateHealth(dataObject as IKidneyDataObject[]);
+    }
   }, [dataObject]);
 
   useEffect(() => {
