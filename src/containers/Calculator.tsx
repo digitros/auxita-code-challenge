@@ -122,7 +122,7 @@ const Calculator = ({ type }: ICalculatorProps) => {
         .map((item, index, arr) => {
           if (index !== arr.length - 1) {
             const dropPercentage = Math.floor(
-              Math.abs(100 - (arr[index + 1].eGFR * 100) / item.eGFR)
+              100 - (arr[index + 1].eGFR * 100) / item.eGFR
             );
             if (dropPercentage >= 20) {
               return { drop: dropPercentage, readings: [item, arr[index + 1]] };
