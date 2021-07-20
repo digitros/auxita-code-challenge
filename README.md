@@ -2,7 +2,9 @@
 
 Code challenge
 
-Build Setup
+## Build Setup
+
+```bash
 
 # install dependencies
 
@@ -15,3 +17,5 @@ npm run start
 # build for production with minification
 
 npm run build
+
+```
